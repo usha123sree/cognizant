@@ -1,0 +1,331 @@
+/* General Body Styles */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+    margin: 0; /* Ensure no default body margin */
+}
+
+/* Navigation Bar Styles */
+nav {
+    width: 100%;
+    max-width: 800px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 24px;
+}
+
+nav ul {
+    display: flex;
+    justify-content: space-around;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav li {
+    margin: 0 8px;
+}
+
+nav a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* Main Content Area Styles */
+main {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    padding: 24px;
+}
+
+/* Section Styles */
+section {
+    padding-bottom: 24px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+section:last-child {
+    border-bottom: none; /* No border for the last section */
+    padding-bottom: 0;
+}
+
+/* Heading Styles */
+h1 {
+    font-size: 2em;
+    font-weight: bold;
+    color: #1f2937;
+    margin-bottom: 16px;
+}
+
+h2 {
+    font-size: 1.5em;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 16px;
+}
+
+h3 {
+    font-size: 1.25em;
+    font-weight: 500;
+    color: #374151;
+    margin-bottom: 12px;
+}
+
+/* Welcome Banner Styles */
+#welcomeBanner {
+    background-color: #3498db;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+#welcomeBanner p {
+    font-size: 1.125em;
+}
+
+.special-offer {
+    font-weight: bold;
+    color: #fca5a5;
+}
+
+.highlight {
+    background-color: #fcd34d;
+    font-weight: bold;
+    padding: 2px 5px;
+    border-radius: 4px;
+}
+
+/* Paragraph Styles */
+p {
+    color: #4b5563;
+    font-size: 1.125em;
+}
+
+/* Image Gallery Styles */
+.gallery-container {
+    margin-bottom: 32px;
+}
+
+.image-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Responsive grid */
+    gap: 16px; /* Space between gallery items */
+    justify-items: center; /* Center items in the grid */
+}
+
+.gallery-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.gallery-item img {
+    width: 100%; /* Make images fill their container */
+    max-width: 150px; /* Limit max width for consistency */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 8px; /* Rounded corners for images */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+.gallery-item p {
+    margin-top: 8px;
+    color: #4b5563;
+    font-size: 0.9em; /* Smaller font for captions */
+}
+
+/* Form Styles */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 0;
+}
+
+form div {
+    margin-bottom: 8px; /* Space between form groups */
+}
+
+label {
+    display: block;
+    color: #374151;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="date"],
+select,
+textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
+}
+
+small {
+    color: #dc2626;
+    margin-top: 4px;
+    display: block;
+}
+
+#eventFee {
+    margin-top: 8px;
+    color: #4b5563;
+}
+
+.char-count-text {
+    font-size: 0.875em;
+    color: #6b7280;
+    margin-top: 4px;
+}
+
+/* Video Section Styles */
+#promoVideo {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    display: block;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#videoStatus {
+    margin-top: 16px;
+    text-align: center;
+    padding: 10px;
+    border-radius: 6px;
+    font-weight: 500;
+    background-color: #e6f7ff;
+    border: 1px solid #91d5ff;
+    color: #1890ff;
+}
+
+/* Button Styles */
+button {
+    color: white;
+    font-weight: bold;
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition for hover effects */
+}
+
+#clearPreferencesButton {
+    background-color: #ef4444; /* Red color */
+}
+
+#clearPreferencesButton:hover {
+    background-color: #dc2626; /* Darker red on hover */
+}
+
+#findNearbyEventsButton {
+    background-color: #7c3aed; /* Purple color */
+    margin-bottom: 16px;
+}
+
+#findNearbyEventsButton:hover {
+    background-color: #6d28d9; /* Darker purple on hover */
+}
+
+/* Contact Section Link Styles */
+#contact a {
+    color: #2563eb;
+    text-decoration: underline;
+}
+
+#contact a:hover {
+    color: #1d4ed8; /* Darker blue on hover */
+}
+
+/* Footer Styles */
+footer {
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+    color: #6b7280;
+    margin-top: 32px;
+    padding: 16px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    nav li {
+        margin: 0;
+    }
+
+    main {
+        padding: 16px;
+        gap: 24px;
+    }
+
+    h1 {
+        font-size: 1.75em;
+    }
+
+    h2 {
+        font-size: 1.25em;
+    }
+
+    h3 {
+        font-size: 1.1em;
+    }
+
+    .gallery-item img {
+        max-width: 120px;
+    }
+}
+@media (max-width: 480px) {
+    body {
+        padding: 8px;
+    }
+
+    nav, main, footer {
+        padding: 12px;
+    }
+
+    h1 {
+        font-size: 1.5em;
+    }
+
+    h2 {
+        font-size: 1.1em;
+    }
+
+    h3 {
+        font-size: 1em;
+    }
+
+    .gallery-item img {
+        max-width: 100px;
+    }
+}
