@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Community Event Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#events">Events</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="help.html" target="_blank">Help Document</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="home">
+            <h1>Welcome to the Local Community Event Portal!</h1>
+            <div id="welcomeBanner">
+                <p>Welcome, logged-in user! Check out our <span class="special-offer">special offer</span> for new registrations!</p>
+            </div>
+            <p>This portal helps residents <span class="highlight">register for events</span>, check locations, and access basic services.</p>
+        </section>
+
+        <section id="events">
+            <h2>Upcoming Events</h2>
+            <div class="gallery-container">
+                <h3>Past Community Events Gallery</h3>
+                <div>
+                    <div style="padding-left: 30%;">
+                        <img src="https://godreamcast.com/blog/wp-content/uploads/2024/12/Community-Clean-Up-Events.jpg" alt="Community Clean-Up Events" style="width:30%;height: 30%;">
+                        <p>Community Clean-Up Events</p>
+                    </div>
+                    <div style="padding-left: 30%;">
+                        <img src="https://th.bing.com/th/id/OIP.NqLlw4IBR044lPr37_wbvAAAAA?w=224&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7" alt="Local Live Concert"style="width:30%;height: 30%;">
+                        <p>Local Live Concert</p>%
+                    </div>
+                    <div style="padding-left: 30%;">
+                        <img src="https://th.bing.com/th/id/OIP.iuMQ6XO4gtSlIJ9O4EL2JgHaE8?w=255&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7" alt="Art Exhibition"style="width:30%;height: 30%;">
+                        <p>Art Exhibition</p>
+                    </div>
+                    <div style="padding-left: 30%;">
+                        <img src="https://th.bing.com/th/id/OIP.MiWmXTiyyXnzLnFmYsTiewHaD4?w=335&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7" alt="Festival Celebrating Community"style="width:30%;height: 30%;">
+                        <p>Festival Celebrating Community</p>
+                    </div>
+                    <div style="padding-left: 30%;">
+                        <img src="https://th.bing.com/th/id/OIP.xK6RhnrZd-HvqK_H0R-PMQHaEo?w=268&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7" alt="Educational Webinars"style="width:30%;height: 30%;">
+                        <p>Educational Webinars</p>
+                    </div>
+                    <div style="padding-left: 30%;">
+                        <img src="https://th.bing.com/th/id/OIP.ygsvG23k4DjO50BW2afmPgAAAA?w=263&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7" alt="Book Fair"style="width:30%;height: 30%;">
+                        <p>Book Fair</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Event Registration</h3>
+            <form id="eventRegistrationForm">
+                <div>
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" placeholder="Your full name" required autofocus>
+                </div>
+                <div>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
+                </div>
+                <div>
+                    <label for="phone">Phone Number:</label>
+                    <input type="text" id="phone" name="phone" placeholder="e.g., 123-456-7890">
+                    <small id="phoneError"></small>
+                </div>
+                <div>
+                    <label for="date">Event Date:</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+                <div>
+                    <label for="eventType">Event Type:</label>
+                    <select id="eventType" name="eventType">
+                        <option value="">Select an Event Type</option>
+                        <option value="conference" data-fee="50">Conference</option>
+                        <option value="workshop" data-fee="25">Workshop</option>
+                        <option value="seminar" data-fee="10">Seminar</option>
+                        <option value="free" data-fee="0">Free Event</option>
+                    </select>
+                    <p id="eventFee">Event Fee: $0</p>
+                </div>
+                <div>
+                    <label for="message">Message:</label>
+                    <textarea id="message" name="message" rows="5" placeholder="Any special requests or questions?" maxlength="500"></textarea>
+                    <p class="char-count-text">Characters left: <span id="charCount">500</span></p>
+                </div>
+                <button type="submit" id="submitRegistration">Register for Event</button>
+                <div id="confirmationOutput" class="message-box"></div>
+            </form>
+        </section>
+
+        <section id="video-invite">
+            <h2>Event Promo Video</h2>
+            <video id="promoVideo" controls>
+                <source src="https://cdn.pixabay.com/video/2020/07/18/44926-441206479_large.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <p id="videoStatus" class="message-box"></p>
+        </section>
+
+        <section id="preferences">
+            <h2>User Preferences</h2>
+            <label for="preferredEventType">Preferred Event Type:</label>
+            <select id="preferredEventType">
+                <option value="">Select your preferred event type</option>
+                <option value="conference">Conference</option>
+                <option value="workshop">Workshop</option>
+                <option value="seminar">Seminar</option>
+                <option value="free">Free Event</option>
+            </select>
+            <button id="clearPreferencesButton">Clear Preferences</button>
+        </section>
+
+        <section id="geolocation">
+            <h2>Find Nearby Events</h2>
+            <button id="findNearbyEventsButton">Find Nearby Events</button>
+            <p id="coordinates" class="message-box"></p>
+            <p id="geoError" class="message-box"></p>
+        </section>
+
+        <section id="feedback">
+            <div>
+                <label for="feedbackMessage">FEEDBACK:</label>
+                <textarea id="feedbackMessage" name="feedbackMessage" rows="5" placeholder="give feedback" maxlength="500"></textarea>
+                <p class="char-count-text">Characters left: <span id="feedbackCharCount">500</span></p>
+            </div>
+        </section>
+
+        <section id="contact">
+            <h2>Contact Us</h2>
+            <p>If you have any questions, feel free to reach out via <a href="#">email</a> or <a href="#">phone</a>.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Local Community Event Portal</p>
+    </footer>
+
+    <script src="script.js" defer></script>
+</body>
+</html>
