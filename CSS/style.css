@@ -1,17 +1,29 @@
-/* General Body Styles */
+/* Universal Reset - Task 3 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* General Body Styles - Task 1, 4, 5 */
 body {
-    font-family: 'Inter', sans-serif;
-    background-color: #f0f2f5;
+    font-family: 'Inter', sans-serif; /* Task 5: Use Google Font */
+    background-color: #f0f2f5; /* Task 4: Fallback background color */
     color: #333;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 16px;
-    margin: 0; /* Ensure no default body margin */
+    margin: 0;
+    /* Task 4: Add a background image to the body with fallback color */
+    background-image: url('https://placehold.co/1920x1080/E0E0E0/333333?text=Community+Background');
+    background-size: cover;
+    background-attachment: fixed;
+    background-blend-mode: overlay; /* Blends the image with the background color */
 }
 
-/* Navigation Bar Styles */
+/* Navigation Bar Styles - Task 1, 6 */
 nav {
     width: 100%;
     max-width: 800px;
@@ -25,23 +37,43 @@ nav {
 nav ul {
     display: flex;
     justify-content: space-around;
-    list-style: none;
+    list-style: none; /* Task 6: Remove bullets from nav menus */
     padding: 0;
     margin: 0;
 }
 
 nav li {
-    margin: 0 8px;
+    margin: 0 8px; /* Task 6: Add padding and margin to list items */
 }
 
 nav a {
     color: #2563eb;
     text-decoration: none;
     font-weight: 500;
+    padding: 8px 15px; /* Task 6: Add padding to links */
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Task 6: Style links with :link, :hover, :active, and :visited pseudo-classes */
+nav a:link {
+    background-color: transparent;
+}
+
+nav a:visited {
+    color: #1d4ed8; /* Darker blue for visited */
 }
 
 nav a:hover {
     text-decoration: underline;
+    background-color: #e0f2fe; /* Light blue background on hover */
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+nav a:active {
+    background-color: #bfdbfe; /* Even lighter blue on active */
+    transform: translateY(0);
 }
 
 /* Main Content Area Styles */
@@ -68,36 +100,53 @@ section:last-child {
     padding-bottom: 0;
 }
 
-/* Heading Styles */
+/* Heading Styles - Task 3, 4, 5 */
 h1 {
-    font-size: 2em;
-    font-weight: bold;
+    font-size: 2em; /* Task 5: Set font-size */
+    font-weight: bold; /* Task 5: Set font-weight */
     color: #1f2937;
     margin-bottom: 16px;
+    text-align: center; /* Task 5: Set text-align */
+    /* Task 4: Apply gradients to section headers */
+    background: linear-gradient(to right, #3498db, #8e44ad);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-transform: uppercase; /* Task 5: Set text-transform */
+    letter-spacing: 1px; /* Task 5: Set letter-spacing */
 }
 
 h2 {
-    font-size: 1.5em;
-    font-weight: 600;
-    color: #1f2937;
+    font-size: 1.5em; /* Task 5: Set font-size */
+    font-weight: 600; /* Task 5: Set font-weight */
+    color: #1f2937; /* Task 3: Element selector for h2 */
     margin-bottom: 16px;
+    text-align: center; /* Task 5: Set text-align */
+    /* Task 4: Apply gradients to section headers */
+    background: linear-gradient(to right, #2ecc71, #27ae60);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-transform: uppercase; /* Task 5: Set text-transform */
 }
 
-h3 {
-    font-size: 1.25em;
-    font-weight: 500;
+h3, p { /* Task 3: Grouping selector for h3, p */
+    font-size: 1.25em; /* Task 5: Set font-size */
+    font-weight: 500; /* Task 5: Set font-weight */
     color: #374151;
     margin-bottom: 12px;
+    text-align: justify; /* Task 5: Set text-align */
+    line-height: 1.6; /* Task 5: Set line-height */
 }
 
-/* Welcome Banner Styles */
-#welcomeBanner {
+/* Welcome Banner Styles - Task 3 (ID selector) */
+#welcomeBanner { /* Task 3: ID selector #mainHeader (mapped to #welcomeBanner) */
     background-color: #3498db;
     color: white;
     padding: 20px;
     text-align: center;
     border-radius: 8px;
     margin-bottom: 16px;
+    /* Task 8: Add border, padding, and margin (already covered by padding/margin-bottom) */
+    border: 1px solid #2980b9;
 }
 
 #welcomeBanner p {
@@ -106,7 +155,7 @@ h3 {
 
 .special-offer {
     font-weight: bold;
-    color: #fca5a5;
+    color: #fca5a5; /* Task 4: Use HEX for color */
 }
 
 .highlight {
@@ -122,7 +171,7 @@ p {
     font-size: 1.125em;
 }
 
-/* Image Gallery Styles */
+/* Image Gallery Styles - Task 3 (Class selector), Task 8 */
 .gallery-container {
     margin-bottom: 32px;
 }
@@ -132,13 +181,26 @@ p {
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Responsive grid */
     gap: 16px; /* Space between gallery items */
     justify-items: center; /* Center items in the grid */
+    justify-content: center; /* Added to center the entire grid horizontally */
 }
 
-.gallery-item {
+.gallery-item { /* Task 3: Class selector .eventCard (mapped to .gallery-item) */
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
+    /* Task 8: Add border, padding, and margin to .eventCard */
+    border: 1px solid #d1d5db;
+    padding: 15px;
+    margin: 10px; /* Added margin for spacing between items */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 .gallery-item img {
@@ -155,7 +217,7 @@ p {
     font-size: 0.9em; /* Smaller font for captions */
 }
 
-/* Form Styles */
+/* Form Styles - Task 8 */
 form {
     display: flex;
     flex-direction: column;
@@ -184,6 +246,16 @@ textarea {
     border: 1px solid #d1d5db;
     border-radius: 6px;
     box-sizing: border-box; /* Include padding and border in element's total width and height */
+    transition: border-color 0.3s ease, outline 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Task 8: Add outline to highlight selected fields in a form */
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #2563eb;
+    outline: 2px solid #2563eb; /* Blue outline */
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
 }
 
 small {
@@ -232,7 +304,7 @@ button {
     border-radius: 8px;
     border: none;
     cursor: pointer;
-    transition: background-color 0.3s ease; /* Smooth transition for hover effects */
+    transition: background-color 0.3s ease;
 }
 
 #clearPreferencesButton {
@@ -250,6 +322,63 @@ button {
 
 #findNearbyEventsButton:hover {
     background-color: #6d28d9; /* Darker purple on hover */
+}
+
+/* Table Styling - Task 7 */
+.events-table {
+    width: 100%;
+    border-collapse: collapse; /* Task 7: Use border-collapse: collapse */
+    margin-top: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden; /* Ensures rounded corners apply to content */
+}
+
+.events-table th,
+.events-table td {
+    border: 1px solid #ddd; /* Task 7: Style table, th, and td with borders */
+    padding: 12px; /* Task 7: Add padding */
+    text-align: center; /* Task 7: Use text-align: center */
+}
+
+.events-table th {
+    background-color: #f2f2f2; /* Task 7: Add background color */
+    color: #333;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Task 7: Add zebra striping to rows using nth-child(even) */
+.events-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.events-table tbody tr:hover {
+    background-color: #e9e9e9;
+}
+
+/* News Article Section (for Multi-Columns) - Task 9 */
+.news-article {
+    margin-top: 40px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.news-article h2 {
+    background: linear-gradient(to right, #e67e22, #d35400);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    border-bottom: 2px solid #f39c12;
+}
+
+.news-content {
+    column-count: 2; /* Task 9: column-count */
+    column-gap: 30px; /* Task 9: column-gap */
+    column-rule: 1px solid gray; /* Task 9: column-rule */
+    text-align: justify;
 }
 
 /* Contact Section Link Styles */
@@ -272,8 +401,9 @@ footer {
     padding: 16px;
 }
 
-/* Responsive Adjustments */
-@media (max-width: 768px) {
+/* Responsive Adjustments - Task 10 */
+@media (max-width: 768px) { /* Task 10: Media query for screens smaller than 768px */
+    /* Task 10: Stack navigation links vertically instead of horizontally */
     nav ul {
         flex-direction: column;
         gap: 8px;
@@ -288,6 +418,7 @@ footer {
         gap: 24px;
     }
 
+    /* Task 10: Reduce image sizes and font sizes */
     h1 {
         font-size: 1.75em;
     }
@@ -301,9 +432,17 @@ footer {
     }
 
     .gallery-item img {
-        max-width: 120px;
+        max-width: 120px; /* Reduced image size */
+    }
+
+    /* Task 10: Flexible layouts (already handled by flex/grid and %/vw/vh) */
+    .news-content {
+        column-count: 1; /* Single column on small screens */
+        column-gap: 0;
+        column-rule: none;
     }
 }
+
 @media (max-width: 480px) {
     body {
         padding: 8px;
