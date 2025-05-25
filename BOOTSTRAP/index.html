@@ -1,1 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Community Event Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles to complement Tailwind and ensure specific overrides */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5; /* Light grey background */
+            color: #333;
+        }
+        /* Specific styling for the welcome banner as per original request */
+        #welcomeBanner {
+            background-color: #3498db; /* Blue background */
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px; /* Rounded corners */
+        }
+        /* Highlight class for visual emphasis */
+        .highlight {
+            background-color: #f1c40f; /* Yellow highlight */
+            font-weight: bold;
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+        /* Image border as per original request */
+        .image-border {
+            border: 2px solid #27ae60; /* Green border */
+            border-radius: 8px;
+            transition: transform 0.2s ease-in-out; /* Smooth transition for enlargement */
+        }
+        .image-border.enlarged {
+            transform: scale(1.5); /* Enlarge factor */
+            z-index: 10; /* Bring to front when enlarged */
+            position: relative; /* Needed for z-index to work */
+        }
+        /* Form styling */
+        form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        /* Output message styling for various elements */
+        #confirmationOutput, #videoStatus, #geolocationOutput, #phoneError {
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 6px;
+            font-weight: 500;
+            text-align: center; /* Center text for these output elements */
+        }
+        /* Specific styles for different message types (can be applied via JS) */
+        .message-success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .message-error {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .message-info {
+            background-color: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+        }
+        .message-warning {
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            color: #856404;
+        }
+
+        /* CustomMessageBox for temporary floating messages */
+        #customMessageBox {
+            position: fixed;
+            top: 5rem; /* Adjust as needed */
+            left: 50%;
+            transform: translateX(-50%) scale(0); /* Start scaled down and hidden */
+            opacity: 0;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
+            z-index: 50; /* Ensure it's above other content */
+            transition: all 0.3s ease-in-out;
+            min-width: 250px; /* Ensure it's wide enough */
+            text-align: center;
+        }
+        #customMessageBox.show {
+            transform: translateX(-50%) scale(1);
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center p-4">
+    <nav class="w-full max-w-4xl bg-white shadow-md rounded-lg p-4 mb-6">
+        <ul class="flex justify-around space-x-4">
+            <li><a href="#home" class="text-blue-600 hover:text-blue-800 font-medium">Home</a></li>
+            <li><a href="#events" class="text-blue-600 hover:text-blue-800 font-medium">Events</a></li>
+            <li><a href="#contact" class="text-blue-600 hover:text-blue-800 font-medium">Contact</a></li>
+            <li><a href="help.html" target="_blank" class="text-blue-600 hover:text-blue-800 font-medium">Help Document</a></li>
+        </ul>
+    </nav>
+
+    <main class="w-full max-w-4xl space-y-8">
+        <section id="home" class="bg-white shadow-md rounded-lg p-6">
+            <h1 class="text-3xl font-bold text-gray-800 mb-4">Welcome to the Local Community Event Portal!</h1>
+            <div id="welcomeBanner" class="mb-4">
+                <p class="text-lg">Welcome, logged-in user! Check out our <span class="font-bold text-red-300">special offer</span> for new registrations!</p>
+            </div>
+            <p class="text-gray-700 text-lg">This portal helps residents <span class="highlight">register for events</span>, check locations, and access basic services.</p>
+        </section>
+
+        <section id="events" class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Upcoming Events</h2>
+            <div class="mb-8">
+                <h3 class="text-xl font-medium text-gray-700 mb-3">Past Community Events Gallery</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <div class="flex flex-col items-center text-center">
+                        <img src="https://placehold.co/150x150/0000FF/808080?text=Event+1" alt="Community Picnic" title="A lovely community picnic" class="image-border w-full h-auto max-w-[150px] cursor-pointer" data-original-src="https://placehold.co/150x150/0000FF/808080?text=Event+1">
+                        <p class="mt-2 text-gray-600">Community Picnic</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <img src="https://placehold.co/150x150/FF0000/FFFFFF?text=Event+2" alt="Local Concert" title="Exciting local concert" class="image-border w-full h-auto max-w-[150px] cursor-pointer" data-original-src="https://placehold.co/150x150/FF0000/FFFFFF?text=Event+2">
+                        <p class="mt-2 text-gray-600">Local Concert</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <img src="https://placehold.co/150x150/00FF00/000000?text=Event+3" alt="Art Exhibition" title="Stunning art exhibition" class="image-border w-full h-auto max-w-[150px] cursor-pointer" data-original-src="https://placehold.co/150x150/00FF00/000000?text=Event+3">
+                        <p class="mt-2 text-gray-600">Art Exhibition</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <img src="https://placehold.co/150x150/FFFF00/000000?text=Event+4" alt="Farmers Market" title="Fresh produce at the farmers market" class="image-border w-full h-auto max-w-[150px] cursor-pointer" data-original-src="https://placehold.co/150x150/FFFF00/000000?text=Event+4">
+                        <p class="mt-2 text-gray-600">Farmers Market</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <img src="https://placehold.co/150x150/FF00FF/FFFFFF?text=Event+5" alt="Sports Day" title="Fun sports day for all ages" class="image-border w-full h-auto max-w-[150px] cursor-pointer" data-original-src="https://placehold.co/150x150/FF00FF/FFFFFF?text=Event+5">
+                        <p class="mt-2 text-gray-600">Sports Day</p>
+                    </div>
+                    <div class="flex flex-col items-center text-center">
+                        <img src="https://placehold.co/150x150/00FFFF/000000?text=Event+6" alt="Book Fair" title="Discover new books at the fair" class="image-border w-full h-auto max-w-[150px] cursor-pointer" data-original-src="https://placehold.co/150x150/00FFFF/000000?text=Event+6">
+                        <p class="mt-2 text-gray-600">Book Fair</p>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="text-xl font-semibold text-gray-800 mb-4">Event Registration</h3>
+            <form id="eventRegistrationForm" class="space-y-4">
+                <div>
+                    <label for="name" class="block text-gray-700 font-medium mb-1">Name:</label>
+                    <input type="text" id="name" name="name" placeholder="Your full name" required autofocus
+                           class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div>
+                    <label for="email" class="block text-gray-700 font-medium mb-1">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="your.email@example.com" required
+                           class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div>
+                    <label for="phone" class="block text-gray-700 font-medium mb-1">Phone Number:</label>
+                    <input type="text" id="phone" name="phone" placeholder="e.g., 123-456-7890"
+                           class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                    <small id="phoneError" class="text-red-600 mt-1"></small>
+                </div>
+                <div>
+                    <label for="date" class="block text-gray-700 font-medium mb-1">Event Date:</label>
+                    <input type="date" id="date" name="date" required
+                           class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div>
+                    <label for="eventType" class="block text-gray-700 font-medium mb-1">Event Type:</label>
+                    <select id="eventType" name="eventType"
+                            class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500">
+                        <option value="">Select an Event Type</option>
+                        <option value="conference" data-fee="50">Conference</option>
+                        <option value="workshop" data-fee="25">Workshop</option>
+                        <option value="seminar" data-fee="10">Seminar</option>
+                        <option value="free" data-fee="0">Free Event</option>
+                    </select>
+                    <p id="eventFee" class="mt-2 text-gray-600">Event Fee: $0</p>
+                </div>
+                <div>
+                    <label for="message" class="block text-gray-700 font-medium mb-1">Message:</label>
+                    <textarea id="message" name="message" rows="5" placeholder="Any special requests or questions?" maxlength="500"
+                                 class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"></textarea>
+                    <p class="text-sm text-gray-500 mt-1">Characters left: <span id="charCount">500</span></p>
+                </div>
+                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out shadow-md">Register</button>
+                <output for="name email date eventType message" id="confirmationOutput" class="block"></output>
+            </form>
+        </section>
+
+        <section id="video-invite" class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Event Promo Video</h2>
+            <video id="promoVideo" controls class="w-full max-w-xl mx-auto block rounded-lg shadow-lg">
+                <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <p id="videoStatus" class="mt-4 text-center"></p>
+        </section>
+
+        <section id="preferences" class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">User Preferences</h2>
+            <label for="preferredEventType" class="block text-gray-700 font-medium mb-2">Preferred Event Type:</label>
+            <select id="preferredEventType" class="w-full p-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500 mb-4">
+                <option value="">Select your preferred event type</option>
+                <option value="conference">Conference</option>
+                <option value="workshop">Workshop</option>
+                <option value="seminar">Seminar</option>
+                <option value="free">Free Event</option>
+            </select>
+            <button id="clearPreferencesButton" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out shadow-md">Clear Preferences</button>
+        </section>
+
+        <section id="geolocation" class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Find Nearby Events</h2>
+            <button id="findNearbyEventsButton" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out shadow-md mb-4">Find Nearby Events</button>
+            <div id="geolocationOutput" class="mt-4 p-3 rounded-lg text-center font-medium"></div>
+        </section>
+
+        <section id="contact" class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-2xl font-semibold text-gray-800 mb-4">Contact Us</h2>
+            <p class="text-gray-700">If you have any questions, feel free to reach out via <a href="#" class="text-blue-600 hover:underline">email</a> or <a href="#" class="text-blue-600 hover:underline">phone</a>.</p>
+        </section>
+    </main>
+
+    <footer class="w-full max-w-4xl text-center text-gray-600 mt-8 py-4">
+        <p>&copy; 2025 Local Community Event Portal</p>
+    </footer>
+
+    <script>
+        // Ensure the DOM is fully loaded before running the script
+        document.addEventListener('DOMContentLoaded', () => {
+            // Get DOM elements
+            const phoneField = document.getElementById('phone');
+            const eventTypeSelect = document.getElementById('eventType');
+            const eventRegistrationForm = document.getElementById('eventRegistrationForm');
+            const messageTextarea = document.getElementById('message'); // For event registration message
+            const feedbackMessageTextarea = document.getElementById('feedbackMessage'); // For feedback message
+            const imageGalleryImages = document.querySelectorAll('.image-border'); // Select images within gallery items
+            const promoVideo = document.getElementById('promoVideo');
+            const preferredEventTypeSelect = document.getElementById('preferredEventType');
+            const clearPreferencesButton = document.getElementById('clearPreferencesButton');
+            const findNearbyEventsButton = document.getElementById('findNearbyEventsButton');
+            const videoStatusElement = document.getElementById('videoStatus'); // Added for video status
+            const geolocationOutput = document.getElementById('geolocationOutput'); // Get the new dedicated output div
+
+            // --- Event Listeners ---
+
+            // onblur to validate a phone number field
+            if (phoneField) {
+                phoneField.addEventListener('blur', validatePhoneNumber);
+            }
+
+            // onchange on a dropdown to display the selected event fee
+            if (eventTypeSelect) {
+                eventTypeSelect.addEventListener('change', displayEventFee);
+            }
+
+            // onclick on a submit button to show a confirmation (handled by form submit)
+            if (eventRegistrationForm) {
+                eventRegistrationForm.addEventListener('submit', (event) => {
+                    event.preventDefault(); // Prevent default form submission
+                    showConfirmation();
+                });
+            }
+
+            // ondblclick on an image to enlarge it
+            if (imageGalleryImages.length > 0) {
+                imageGalleryImages.forEach(img => {
+                    img.addEventListener('dblclick', enlargeImage);
+                });
+            }
+
+            // Capture key events in the event registration message textarea and count characters
+            if (messageTextarea) {
+                messageTextarea.addEventListener('keyup', (event) => countCharacters(event, 'charCount'));
+            }
+
+            // Capture key events in the feedback textarea and count characters
+            if (feedbackMessageTextarea) {
+                feedbackMessageTextarea.addEventListener('keyup', (event) => countCharacters(event, 'feedbackCharCount'));
+            }
+
+            // --- Task 7: Video Invite with Media Events ---
+
+            // Use oncanplay to display a message like "Video ready to play"
+            if (promoVideo && videoStatusElement) {
+                promoVideo.addEventListener('canplay', () => {
+                    videoStatusElement.textContent = "Video ready to play";
+                    videoStatusElement.className = 'message-info'; // Apply info styling
+                });
+                promoVideo.addEventListener('play', () => {
+                    videoStatusElement.textContent = 'Video is playing...';
+                    videoStatusElement.className = 'message-info';
+                });
+
+                promoVideo.addEventListener('pause', () => {
+                    videoStatusElement.textContent = 'Video is paused.';
+                    videoStatusElement.className = 'message-info';
+                });
+
+                promoVideo.addEventListener('ended', () => {
+                    videoStatusElement.textContent = 'Video has ended. Thank you for watching!';
+                    videoStatusElement.className = 'message-success';
+                });
+
+                promoVideo.addEventListener('error', () => {
+                    videoStatusElement.textContent = 'Error loading video.';
+                    videoStatusElement.className = 'message-error';
+                });
+            } else {
+                console.error("Elements for video status not found.");
+            }
+
+            // --- Task 8: Saving User Preferences ---
+
+            // Load saved preference on reload
+            if (preferredEventTypeSelect) {
+                const savedEventType = localStorage.getItem('preferredEventType');
+                if (savedEventType) {
+                    preferredEventTypeSelect.value = savedEventType;
+                }
+                // Save selected event type in localStorage
+                preferredEventTypeSelect.addEventListener('change', (event) => {
+                    localStorage.setItem('preferredEventType', event.target.value);
+                    console.log(`Preferred event type saved: ${event.target.value}`);
+                    displayCustomMessage(`Preferred event type saved: ${event.target.value}`, "info");
+                });
+            } else {
+                console.error("Element for preferred event type select not found.");
+            }
+
+            // Add a "Clear Preferences" button that clears both localStorage and sessionStorage
+            if (clearPreferencesButton) {
+                clearPreferencesButton.addEventListener('click', clearPreferences);
+            } else {
+                console.error("Element for clear preferences button not found.");
+            }
+
+            // --- Task 9: Geolocation for Event Mapping ---
+
+            // Create a button "Find Nearby Events" and attach click listener
+            if (findNearbyEventsButton) {
+                findNearbyEventsButton.addEventListener('click', findNearbyEvents);
+            } else {
+                console.error("Element for find nearby events button not found.");
+            }
+        });
+
+        // Use onbeforeunload to warn users if they try to leave the form page unfinished
+        window.addEventListener('beforeunload', (event) => {
+            const nameField = document.getElementById('name');
+            if (nameField && nameField.value.trim() !== '') {
+                const message = "You have unsaved changes. Are you sure you want to leave?";
+                event.returnValue = message; // Standard for most browsers
+                return message; // For older browsers
+            }
+        });
+
+        /**
+         * Validates the phone number field.
+         */
+        function validatePhoneNumber() {
+            const phoneField = document.getElementById('phone');
+            const phoneError = document.getElementById('phoneError');
+            // Simple pattern for XXX-XXX-XXXX or XXXXXXXXXX
+            const phonePattern = /^(\d{3}-\d{3}-\d{4}|\d{10})$/;
+
+            if (!phoneField || !phoneError) {
+                console.error("Phone field or error element not found for validation.");
+                return true; // Prevent further errors if elements are missing
+            }
+
+            if (phoneField.value.trim() === '') {
+                phoneError.textContent = ""; // Clear error if field is empty
+                phoneField.classList.remove('border-red-500', 'focus:border-red-500', 'focus:ring-red-500');
+                phoneField.classList.add('border-gray-300', 'focus:border-blue-500', 'focus:ring-blue-500');
+                return true;
+            }
+
+            if (!phonePattern.test(phoneField.value)) {
+                phoneError.textContent = "Please enter a valid phone number (e.g., 123-456-7890 or 1234567890).";
+                phoneField.classList.add('border-red-500', 'focus:border-red-500', 'focus:ring-red-500');
+                phoneField.classList.remove('border-gray-300', 'focus:border-blue-500', 'focus:ring-blue-500');
+                return false;
+            } else {
+                phoneError.textContent = "";
+                phoneField.classList.remove('border-red-500', 'focus:border-red-500', 'focus:ring-red-500');
+                phoneField.classList.add('border-gray-300', 'focus:border-blue-500', 'focus:ring-blue-500');
+                return true;
+            }
+        }
+
+        /**
+         * Displays the event fee based on the selected event type.
+         */
+        function displayEventFee() {
+            const selectElement = document.getElementById('eventType');
+            const eventFeeDisplay = document.getElementById('eventFee');
+            if (!selectElement || !eventFeeDisplay) {
+                console.error("Event type select or fee display element not found.");
+                return;
+            }
+            const selectedOption = selectElement.options[selectElement.selectedIndex];
+            const fee = selectedOption.getAttribute('data-fee') || '0'; // Default to 0 if no data-fee
+            eventFeeDisplay.textContent = `Event Fee: $${fee}`;
+        }
+
+        /**
+         * Displays a confirmation message after form submission.
+         */
+        function showConfirmation() {
+            const confirmationOutput = document.getElementById('confirmationOutput');
+            if (!confirmationOutput) {
+                console.error("Confirmation output element not found.");
+                return;
+            }
+
+            // Ensure phone number is valid before showing confirmation
+            if (!validatePhoneNumber()) {
+                confirmationOutput.textContent = "Please correct the phone number error before submitting.";
+                confirmationOutput.className = 'message-error'; // Apply error styling
+                return;
+            }
+
+            const name = document.getElementById('name')?.value;
+            const email = document.getElementById('email')?.value;
+            const eventTypeSelect = document.getElementById('eventType');
+            const eventType = eventTypeSelect ? eventTypeSelect.value : '';
+
+            if (name && email && eventType) {
+                confirmationOutput.textContent = `Thank you, ${name}! Your registration for the ${eventType} event has been submitted. A confirmation email will be sent to ${email}.`;
+                confirmationOutput.className = 'message-success'; // Apply success styling
+            } else {
+                confirmationOutput.textContent = "Please fill in all required fields.";
+                confirmationOutput.className = 'message-error'; // Apply error styling
+            }
+            console.log("Form submitted, confirmation message displayed.");
+        }
+
+        /**
+         * Toggles the enlargement of an image on double-click.
+         * @param {Event} event The double-click event.
+         */
+        function enlargeImage(event) {
+            const img = event.target;
+            img.classList.toggle('enlarged');
+            // Optionally, if you want to prevent scrolling when enlarged:
+            // document.body.style.overflow = img.classList.contains('enlarged') ? 'hidden' : '';
+            console.log("Image double-clicked, toggling enlargement.");
+        }
+
+        /**
+         * Counts characters in a textarea and updates the remaining count.
+         * @param {Event} event The keyup event.
+         * @param {string} charCountId The ID of the span element to update with the character count.
+         */
+        function countCharacters(event, charCountId) {
+            const textarea = event.target;
+            const maxLength = parseInt(textarea.getAttribute('maxlength'));
+            const currentLength = textarea.value.length;
+            const charsLeft = maxLength - currentLength;
+            const charCountElement = document.getElementById(charCountId);
+            if (charCountElement) {
+                charCountElement.textContent = Math.max(0, charsLeft); // Ensure it doesn't go below 0
+            }
+            console.log(`Characters typed: ${currentLength}, remaining: ${charsLeft} for ${charCountId}`);
+        }
+
+        /**
+         * Clears user preferences from localStorage and sessionStorage.
+         * Displays a custom message instead of alert().
+         */
+        function clearPreferences() {
+            localStorage.clear();
+            sessionStorage.clear();
+            const preferredEventTypeSelect = document.getElementById('preferredEventType');
+            if (preferredEventTypeSelect) {
+                preferredEventTypeSelect.value = ''; // Reset dropdown
+            }
+            displayCustomMessage("All preferences cleared!", "success");
+            console.log("Local and session storage cleared.");
+        }
+
+        /**
+         * Finds the user's current geolocation and displays coordinates.
+         * Handles permission denial and timeouts.
+         */
+        function findNearbyEvents() {
+            const geolocationOutput = document.getElementById('geolocationOutput'); // Get the output div
+
+            if (!geolocationOutput) {
+                console.error("Geolocation output element not found.");
+                displayCustomMessage('Error: Geolocation output area not found.', 'error');
+                return;
+            }
+
+            // Clear previous output and set initial message and styling
+            geolocationOutput.textContent = 'Attempting to find your location...';
+            geolocationOutput.className = 'message-info';
+
+            if (navigator.geolocation) {
+                const options = {
+                    enableHighAccuracy: true,
+                    timeout: 10000, // Increased timeout for better accuracy
+                    maximumAge: 0
+                };
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const lat = position.coords.latitude;
+                        const lon = position.coords.longitude;
+                        geolocationOutput.textContent = `Found your location: Latitude ${lat}, Longitude ${lon}.`;
+                        geolocationOutput.className = 'message-success'; // Apply success styling
+                        console.log(`Geolocation successful: Lat ${lat}, Lon ${lon}`);
+                    },
+                    (error) => {
+                        let errorMessage = "";
+                        switch (error.code) {
+                            case error.PERMISSION_DENIED:
+                                errorMessage = "User denied the request for Geolocation. Please allow location access in your browser settings.";
+                                break;
+                            case error.POSITION_UNAVAILABLE:
+                                errorMessage = "Location information is unavailable. Try again later.";
+                                break;
+                            case error.TIMEOUT:
+                                errorMessage = "The request to get user location timed out. Please check your internet connection or try again.";
+                                break;
+                            case error.UNKNOWN_ERROR:
+                                errorMessage = "An unknown error occurred while trying to get your location.";
+                                break;
+                        }
+                        geolocationOutput.textContent = `Error: ${errorMessage}`;
+                        geolocationOutput.className = 'message-error'; // Apply error styling
+                        console.error(`Geolocation error: ${errorMessage}`);
+                    },
+                    options
+                );
+            } else {
+                geolocationOutput.textContent = 'Geolocation is not supported by your browser. Please update your browser.';
+                geolocationOutput.className = 'message-error'; // Apply error styling
+                console.error("Geolocation not supported.");
+            }
+        }
+
+        /**
+         * Displays a custom message in a temporary modal-like fashion.
+         * @param {string} message The message to display.
+         * @param {string} type The type of message (e.g., 'success', 'error', 'info').
+         */
+        function displayCustomMessage(message, type) {
+            let messageBox = document.getElementById('customMessageBox');
+            if (!messageBox) {
+                messageBox = document.createElement('div');
+                messageBox.id = 'customMessageBox';
+                document.body.appendChild(messageBox);
+            }
+
+            messageBox.textContent = message;
+            // Reset class for transitions and apply base styles
+            messageBox.className = 'fixed top-5 left-1/2 -translate-x-1/2 p-4 rounded-lg shadow-lg z-50 transition-all duration-300 ease-in-out';
+
+            // Apply styling based on type
+            switch (type) {
+                case 'success':
+                    messageBox.style.backgroundColor = '#d4edda';
+                    messageBox.style.color = '#155724';
+                    messageBox.style.border = '1px solid #c3e6cb';
+                    break;
+                case 'error':
+                    messageBox.style.backgroundColor = '#f8d7da';
+                    messageBox.style.color = '#721c24';
+                    messageBox.style.border = '1px solid #f5c6cb';
+                    break;
+                case 'info':
+                default:
+                    messageBox.style.backgroundColor = '#d1ecf1';
+                    messageBox.style.color = '#0c5460';
+                    messageBox.style.border = '1px solid #bee5eb';
+                    break;
+            }
+
+            // Show the message box
+            messageBox.style.transform = 'translate(-50%, 0) scale(1)';
+            messageBox.style.opacity = '1';
+
+            // Hide the message box after 3 seconds
+            setTimeout(() => {
+                messageBox.style.transform = 'translate(-50%, 0) scale(0.9)';
+                messageBox.style.opacity = '0';
+                setTimeout(() => messageBox.remove(), 300); // Remove from DOM after transition
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
 
